@@ -17,3 +17,18 @@ you'll be creating yourself during the tutorial and the `scripts` subdirectory
 contains shell scripts with commands that are executed when Jenkins processes
 either the "Deliver for development" or "Deploy for production" stages of your
 Pipeline (depending on the branch that Jenkins builds from).
+
+# Start Jenkins Docker node
+
+```
+docker run \
+  --rm \
+  -u root \
+  -d \
+  -p 10080:8080 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "$HOME":/home \
+  --env JAVA_OPTS="-Xmx2048m -XX:MaxPermSize=512m -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=3600" \
+  jenkinsci/blueocean
+  ```
